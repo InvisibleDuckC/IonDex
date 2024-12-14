@@ -1,0 +1,7 @@
+{
+  "name": "IonDex",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
