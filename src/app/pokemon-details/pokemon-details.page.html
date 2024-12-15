@@ -1,0 +1,188 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ pokemonDetails?.name | titlecase }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content *ngIf="pokemonDetails">
+  <ion-img [src]="pokemonDetails.sprites.front_default"></ion-img>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Details</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        <strong>Type:</strong>
+        <span *ngFor="let type of pokemonDetails.types">
+          <img
+            [src]="'assets/type-icons/' + type.type.name + '.png'"
+            [alt]="type.type.name"
+            class="type-icon"
+          />
+        </span>
+      </p>
+      <p><strong>Height:</strong> {{ pokemonDetails.height }}</p>
+      <p><strong>Weight:</strong> {{ pokemonDetails.weight }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="description">
+    <ion-card-header>
+      <ion-card-title>Description</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ description }}</p>
+    </ion-card-content>
+  </ion-card>   
+
+    <!-- Sección de Tipos -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Types</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="types">
+          <img *ngFor="let type of pokemonDetails?.types" [src]="'assets/type-icons/' + type.type.name + '.png'" [alt]="type.type.name" class="type-icon" />
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+  <!-- Sección de Debilidades y Fortalezas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Strengths and Weaknesses</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div>
+        <h3>Strengths:</h3>
+        <div>
+          <img *ngFor="let type of strengths" [src]="'assets/type-icons/' + type + '.png'" [alt]="type" />
+        </div>
+      </div>
+      <div>
+        <h3>Weaknesses:</h3>
+        <div>
+          <img *ngFor="let type of weaknesses" [src]="'assets/type-icons/' + type + '.png'" [alt]="type" />
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+
+    <!-- Sección de Habilidades -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Abilities</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ability of abilityDetails">
+              <td>{{ ability.name | titlecase }}</td>
+              <td>{{ ability.effect }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="evolutionChain.length > 0">
+      <ion-card-header>
+        <ion-card-title>Evolution Chain</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="evolution-chain">
+          <div *ngFor="let evolution of evolutionChain" class="evolution-stage">
+            <img [src]="evolution.sprite" [alt]="evolution.name" />
+            <p>{{ evolution.name | titlecase }}</p>
+            <ul>
+              <li *ngFor="let condition of evolution.conditions">{{ condition }}</li>
+            </ul>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>     
+  
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Base Stats</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ul>
+        <li *ngFor="let stat of pokemonDetails.stats">
+          {{ stat.stat.name | titlecase }}: {{ stat.base_stat }}
+        </li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="habitat || shape">
+    <ion-card-header>
+      <ion-card-title>Additional Details</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Habitat:</strong> {{ habitat | titlecase }}</p>
+      <p><strong>Shape:</strong> {{ shape | titlecase }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  
+
+
+
+
+  <ng-container *ngFor="let category of ['level-up', 'machine', 'tutor', 'egg', 'other']">
+    <ion-card *ngIf="categorizedMoves[category].length > 0">
+      <ion-card-header>
+        <ion-card-title>{{ category | titlecase }} Moves</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <table class="moves-table">
+          <thead>
+            <tr>
+              <th>Move</th>
+              <th>Type</th>
+              <th>Power</th>
+              <th>PP</th>
+              <th>Accuracy</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let move of categorizedMoves[category]">
+              <td>{{ move.name | titlecase }}</td>
+              <td>
+                <img [src]="move.typeIcon" [alt]="move.type" class="type-icon" />
+                {{ move.type | titlecase }}
+              </td>
+              <td>{{ move.power }}</td>
+              <td>{{ move.pp }}</td>
+              <td>{{ move.accuracy }}</td>
+              <td>
+                <img [src]="move.damageClassIcon" [alt]="move.damageClass" class="damage-icon" />
+                {{ move.damageClass | titlecase }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+  
+  
+  
+  
+
+</ion-content>

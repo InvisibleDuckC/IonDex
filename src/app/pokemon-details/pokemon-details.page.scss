@@ -1,0 +1,86 @@
+ion-img {
+    display: block;
+    margin: 0 auto;
+    width: 150px;
+    height: 150px;
+  }
+  
+  ion-card {
+    margin: 15px;
+  }
+
+  .type-icon {
+    width: 80px;
+    height: 16px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+.damage-class-icon {
+  width: 80px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.moves-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  
+  .moves-table th,
+  .moves-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .moves-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+  }
+
+  .types {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+  .evolution-chain {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .evolution-stage {
+    text-align: center;
+  }
+
+  .evolution-stage img {
+    display: block;
+    width: 100px;
+    height: auto;
+  }
+  
+  .evolution-stage p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
