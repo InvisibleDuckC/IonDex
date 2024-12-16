@@ -9,13 +9,6 @@ ion-img {
     margin: 15px;
   }
 
-  .type-icon {
-    width: 80px;
-    height: 16px;
-    margin-right: 5px;
-    vertical-align: middle;
-  }
-
 .damage-class-icon {
   width: 80px;
   height: 16px;
@@ -46,41 +39,116 @@ ion-img {
     margin: 16px 0;
   }
 
+  .type-relations {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .type-section {
+    flex: 1 1 calc(50% - 16px);
+    text-align: center;
+  }
+  
   .types {
     display: flex;
+    justify-content: center;
     gap: 8px;
-    flex-wrap: wrap;
   }
+  
+  .type-icon {
+    width: 80px;
+    height: 16px;
+  }
+  
 
   table {
     width: 100%;
     border-collapse: collapse;
   }
-
+  
   th, td {
-    text-align: left;
+    border: 1px solid #ccc;
     padding: 8px;
-    border: 1px solid #ddd;
+    text-align: left;
   }
+  
+  th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  
 
+  /* Seccion cadena evolutiva */
   .evolution-chain {
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 16px;
   }
-
+  
   .evolution-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
   }
-
-  .evolution-stage img {
-    display: block;
-    width: 100px;
-    height: auto;
+  
+  .evolution-details {
+    margin-bottom: 8px;
   }
   
-  .evolution-stage p {
+  .evolution-sprite {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+  
+  .evolution-name {
+    margin: 8px 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .evolution-conditions {
     margin: 0;
+    padding: 0;
+    list-style: none;
     font-size: 14px;
+    color: #666;
+  }
+  
+  .evolution-connector {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    color: gray;
+  }
+  
+  .effectiveness-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1rem;
+  }
+  
+  .effectiveness-section {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .type-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .effectiveness-section h3 {
+    text-align: center;
+    color: #333;
   }
   

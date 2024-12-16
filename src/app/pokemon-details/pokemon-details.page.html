@@ -7,10 +7,11 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content *ngIf="pokemonDetails">
+  <!-- Imagen principal del Pokémon -->
   <ion-img [src]="pokemonDetails.sprites.front_default"></ion-img>
 
+  <!-- Detalles básicos -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>Details</ion-card-title>
@@ -31,6 +32,7 @@
     </ion-card-content>
   </ion-card>
 
+  <!-- Descripción -->
   <ion-card *ngIf="description">
     <ion-card-header>
       <ion-card-title>Description</ion-card-title>
@@ -38,83 +40,199 @@
     <ion-card-content>
       <p>{{ description }}</p>
     </ion-card-content>
-  </ion-card>   
+  </ion-card>
 
-    <!-- Sección de Tipos -->
+  <!-- Tipos -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Types</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="types">
+        <img
+          *ngFor="let type of pokemonDetails?.types"
+          [src]="'assets/type-icons/' + type.type.name + '.png'"
+          [alt]="type.type.name"
+          class="type-icon"
+        />
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Fortalezas y debilidades -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Offensive Effectiveness</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card *ngFor="let effectiveness of offensiveEffectiveness">
+        <ion-card-header>
+          <img
+          [src]="'assets/type-icons/' + effectiveness.type + '.png'"
+          [alt]="effectiveness"
+          class="type-icon"
+          />
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <h5>Super Effective:</h5>
+            <ion-col *ngFor="let type of effectiveness.strengths">
+              <img
+              [src]="'assets/type-icons/' + type + '.png'"
+              [alt]="type"
+              />
+            </ion-col>
+          </ion-item>
+          <ion-item>
+            <h5>Not Very Effective:</h5>
+            <ion-col *ngFor="let type of effectiveness.weaknesses">
+              <img
+              [src]="'assets/type-icons/' + type + '.png'"
+              [alt]="type"
+              />
+            </ion-col>
+          </ion-item>
+          <ion-item>
+            <h5>No Effect:</h5>
+            <ion-col *ngFor="let type of effectiveness.ineffectives">
+              <img
+              [src]="'assets/type-icons/' + type + '.png'"
+              [alt]="type"
+              />
+            </ion-col>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Types</ion-card-title>
+        <ion-card-title>Weaknesses and Resistances</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <div class="types">
-          <img *ngFor="let type of pokemonDetails?.types" [src]="'assets/type-icons/' + type.type.name + '.png'" [alt]="type.type.name" class="type-icon" />
-        </div>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <h4>x4:</h4>
+              <div *ngFor="let weakness of defensiveWeaknesses | filterByMultiplier: 'x4'">
+                <img
+                [src]="'assets/type-icons/' + weakness.type + '.png'"
+                [alt]="weakness.type"
+                />
+              </div>
+            </ion-col>
+            <ion-col>
+              <h4>x2:</h4>
+              <div *ngFor="let weakness of defensiveWeaknesses | filterByMultiplier: 'x2'">
+                <img
+                [src]="'assets/type-icons/' + weakness.type + '.png'"
+                [alt]="weakness.type"
+                />
+              </div>
+            </ion-col>
+            <ion-col>
+              <h4>1/4:</h4>
+              <div *ngFor="let resistance of defensiveResistances | filterByMultiplier: '1/4'">
+                <img
+                [src]="'assets/type-icons/' + resistance.type + '.png'"
+                [alt]="resistance.type"
+                />
+              </div>
+            </ion-col>
+            <ion-col>
+              <h4>1/2:</h4>
+              <div *ngFor="let resistance of defensiveResistances | filterByMultiplier: '1/2'">
+                <img
+                [src]="'assets/type-icons/' + resistance.type + '.png'"
+                [alt]="resistance.type"
+                />
+              </div>
+            </ion-col>
+            <ion-col>
+              <h4>Immune To:</h4>
+              <div *ngFor="let immunity of defensiveImmunities">
+                <img
+                  [src]="'assets/type-icons/' + immunity + '.png'"
+                  [alt]="immunity"
+                />
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-card-content>
     </ion-card>
 
-  <!-- Sección de Debilidades y Fortalezas -->
+  </ion-card>
+  
+
+  
+
+  
+  
+
+
+  
+  
+  
+  
+  <ng-template #noData>
+    <span>None</span>
+  </ng-template>
+  
+  
+  
+
+  <!-- Habilidades -->
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Strengths and Weaknesses</ion-card-title>
+      <ion-card-title>Abilities</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div>
-        <h3>Strengths:</h3>
-        <div>
-          <img *ngFor="let type of strengths" [src]="'assets/type-icons/' + type + '.png'" [alt]="type" />
-        </div>
-      </div>
-      <div>
-        <h3>Weaknesses:</h3>
-        <div>
-          <img *ngFor="let type of weaknesses" [src]="'assets/type-icons/' + type + '.png'" [alt]="type" />
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ability of abilityDetails">
+            <td>{{ ability.name | titlecase }}</td>
+            <td>{{ ability.effect }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Cadena evolutiva -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Evolution Chain</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="evolution-chain">
+        <div *ngFor="let evolution of evolutionChain">
+          <div class="evolution-stage">
+            <img
+              [src]="evolution.sprite || 'assets/default-sprite.png'"
+              [alt]="evolution.name"
+              class="evolution-sprite"
+            />
+            <p class="evolution-name">{{ evolution.name | titlecase }}</p>
+            <ul *ngIf="evolution?.conditions && evolution.conditions.length > 0" class="evolution-conditions">
+              <li *ngFor="let condition of evolution.conditions">{{ condition }}</li>
+            </ul>
+                      
+          </div>
         </div>
       </div>
     </ion-card-content>
   </ion-card>
 
-
-    <!-- Sección de Habilidades -->
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Abilities</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let ability of abilityDetails">
-              <td>{{ ability.name | titlecase }}</td>
-              <td>{{ ability.effect }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card *ngIf="evolutionChain.length > 0">
-      <ion-card-header>
-        <ion-card-title>Evolution Chain</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <div class="evolution-chain">
-          <div *ngFor="let evolution of evolutionChain" class="evolution-stage">
-            <img [src]="evolution.sprite" [alt]="evolution.name" />
-            <p>{{ evolution.name | titlecase }}</p>
-            <ul>
-              <li *ngFor="let condition of evolution.conditions">{{ condition }}</li>
-            </ul>
-          </div>
-        </div>
-      </ion-card-content>
-    </ion-card>     
-  
-
+  <!-- Estadísticas base -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>Base Stats</ion-card-title>
@@ -128,6 +246,7 @@
     </ion-card-content>
   </ion-card>
 
+  <!-- Detalles adicionales -->
   <ion-card *ngIf="habitat || shape">
     <ion-card-header>
       <ion-card-title>Additional Details</ion-card-title>
@@ -138,13 +257,9 @@
     </ion-card-content>
   </ion-card>
 
-  
-
-
-
-
-  <ng-container *ngFor="let category of ['level-up', 'machine', 'tutor', 'egg', 'other']">
-    <ion-card *ngIf="categorizedMoves[category].length > 0">
+  <!-- Movimientos categorizados -->
+  <ng-container *ngFor="let category of moveCategories">
+    <ion-card *ngIf="categorizedMoves[category] && categorizedMoves[category].length > 0">
       <ion-card-header>
         <ion-card-title>{{ category | titlecase }} Moves</ion-card-title>
       </ion-card-header>
@@ -180,9 +295,4 @@
       </ion-card-content>
     </ion-card>
   </ng-container>
-  
-  
-  
-  
-
 </ion-content>

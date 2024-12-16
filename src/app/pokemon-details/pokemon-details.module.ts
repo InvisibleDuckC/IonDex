@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PokemonDetailsPageRoutingModule } from './pokemon-details-routing.module';
 
 import { PokemonDetailsPage } from './pokemon-details.page';
+import { FilterByMultiplierPipe } from '../shared/pipes/filter-by-multiplier.pipe';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { PokemonDetailsPage } from './pokemon-details.page';
     IonicModule,
     PokemonDetailsPageRoutingModule
   ],
-  declarations: [PokemonDetailsPage]
+  declarations: [PokemonDetailsPage, FilterByMultiplierPipe]
 })
 export class PokemonDetailsPageModule {}

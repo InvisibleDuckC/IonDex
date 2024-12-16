@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Pokemon, LevelUpMove } from '../models/pokemon.model';
-import { Observable } from 'rxjs';
+import { Pokemon, LevelUpMove, TypeDetails } from '../models/pokemon.model';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -31,9 +31,15 @@ export class PokeApiService {
     return this.http.get(`${this.baseUrl}/move/${moveName}`);
   }
   
-  getTypeDetails(typeName: string) {
-    return this.http.get(`https://pokeapi.co/api/v2/type/${typeName}`);
+  getTypeDetails(typeName: string): Observable<TypeDetails> {
+    return this.http.get<TypeDetails>(`${this.baseUrl}/type/${typeName}`).pipe(
+      catchError((err) => {
+        console.error(`[Service] Error fetching type details for ${typeName}:`, err);
+        return throwError(() => err);
+      })
+    );
   }
+  
 
   // Método para obtener los detalles de una habilidad
   getAbilityDetails(abilityName: string): Observable<any> {
