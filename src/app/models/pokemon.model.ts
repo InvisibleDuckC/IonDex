@@ -1,9 +1,12 @@
 export interface Pokemon {
-    id: string;
-    name: string;
-    url: string;
-    image?: string;
-  }
+  id: string;
+  name: string;
+  url: string;
+  image: string;
+  types: string[]; // Añade esta propiedad
+  generation?: number; // Añade generación si no estaba ya
+}
+
   
   export interface LevelUpMove {
     name: string;

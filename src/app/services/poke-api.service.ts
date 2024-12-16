@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Pokemon, LevelUpMove, TypeDetails } from '../models/pokemon.model';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class PokeApiService {
 
   constructor(private http: HttpClient) {}
 
-  getPokemonList(offset: number = 0, limit: number = 20): Observable<{ results: Pokemon[] }> {
+  getPokemonList(offset: number = 0, limit: number = 1010): Observable<{ results: Pokemon[] }> {
     return this.http.get<{ results: Pokemon[] }>(`${this.baseUrl}/pokemon?offset=${offset}&limit=${limit}`);
   }
 
@@ -39,11 +39,17 @@ export class PokeApiService {
       })
     );
   }
-  
 
   // Método para obtener los detalles de una habilidad
   getAbilityDetails(abilityName: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/ability/${abilityName}`);
+  }
+
+  getAllTypes(): Observable<any[]> {
+    const url = 'https://pokeapi.co/api/v2/type'; // URL para obtener todos los tipos
+    return this.http.get<any>(url).pipe(
+      map((response) => response.results)
+    );
   }
 
 }

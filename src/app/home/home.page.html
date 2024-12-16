@@ -1,18 +1,57 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>PokeDex</ion-title>
+    <ion-title>PokéDex</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <!-- Indicador de carga -->
+  <ion-spinner *ngIf="loading" class="loading-spinner"></ion-spinner>
+
+  <!-- Barra de búsqueda -->
+  <ion-searchbar
+    placeholder="Search Pokémon"
+    [(ngModel)]="searchTerm"
+    (ionInput)="filterPokemon()">
+  </ion-searchbar>
+
+  <!-- Filtros -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Filters</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Type</ion-label>
+        <ion-select [(ngModel)]="selectedType" (ionChange)="filterPokemon()">
+          <ion-select-option value="">All</ion-select-option>
+          <ion-select-option *ngFor="let type of allTypes" [value]="type">
+            {{ type | titlecase }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Generation</ion-label>
+        <ion-select [(ngModel)]="selectedGeneration" (ionChange)="filterPokemon()">
+          <ion-select-option value="">All</ion-select-option>
+          <ion-select-option *ngFor="let gen of allGenerations" [value]="gen">
+            Generation {{ gen }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Lista de Pokémon -->
   <ion-list *ngIf="!loading">
-    <ion-item *ngFor="let pokemon of pokemonList" (click)="viewDetails(pokemon)">
+    <ion-item *ngFor="let pokemon of filteredPokemon" (click)="viewDetails(pokemon)">
       <ion-thumbnail slot="start">
         <img [src]="pokemon.image" />
       </ion-thumbnail>
       <ion-label>{{ pokemon.id }} - {{ pokemon.name | titlecase }}</ion-label>
     </ion-item>
   </ion-list>
-  <ion-spinner *ngIf="loading"></ion-spinner>
-</ion-content>
 
+
+</ion-content>
